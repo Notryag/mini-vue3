@@ -3,30 +3,41 @@
 <div id="root"></div>
 
 <script>
-  const { render } = Vue
+  const { render,reactive,effect } = Vue
 
-  const state = {
-    name: 'vue-next'
+  let state = reactive({
+    name: 'vue-next',
+    count: 0
+  })
+  
+  function handleClick() {
+    state.count = state.count + 1
   }
+  effect(() => {
+    
+    render(
+    {
+      type: 'div',
+      props: null,
+      children: [
+        {
+          type: 'div',
+          props: null,
+          children: '被点击： ' + state.count
+        },
+        {
+          type: 'button',
+          props: {
+            onClick: handleClick
+          },
+          children: '点击'
+        }
+      ]
+    },
+    root
+  )
+  })
 
-  // <div>hello {{ state.name }}</div>
-  const VNode = {
-    type: 'div',
-    props: null,
-    children: [
-      {
-        type: 'div',
-        props: null,
-        children: 'hello'
-      },
-      {
-        type: 'div',
-        props: null,
-        children: state.name
-      }
-    ]
-  }
 
-  render(VNode, root)
+
 </script>
-
