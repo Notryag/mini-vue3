@@ -22,7 +22,7 @@ export const nodeOps = {
 const onRe = /^on[^a-z]/
 const isOn = key => onRe.test(key)
 export function hostPatchProps(el:Element,key,prev,next) {
-  if(isOn) {
+  if(isOn(key)) {
     const name = key.slice(2).toLowerCase()
     prev && el.removeEventListener(name,prev)
     next && el.addEventListener(name,next)

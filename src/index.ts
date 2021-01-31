@@ -1,20 +1,31 @@
 import {nodeOps,hostPatchProps} from './runtime-dom'
 
+export * from './reactivity'
+export * from './runtime-dom'
+
 export function render(vnode, container) {
+  console.log('render');
+  
   patch(container._vnode|| null , vnode, container)
   container._vnode = vnode
 }
 
 export function patch(n1,n2,container){
   if(typeof n2.type === 'string') {
+    processElment(n1,n2,container)
+  }
+}
+
+export function processElment(n1,n2,container) {
+  if(n1 == null) {
+    mountElement(n2,container)
+  } else {
     patchElement(n1,n2,container)
   }
 }
 
-export function patchElement(n1,n2,container) {
-  if(n1 == null) {
-    mountElement(n2,container)
-  }
+function patchElement(n1,n2,contianer) {
+  
 }
 
 function mountElement(vnode,container) {
