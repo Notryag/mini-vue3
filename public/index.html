@@ -1,0 +1,43 @@
+<script src="../dist/vue.js"></script>
+
+<div id="root"></div>
+
+<script>
+  const { render,reactive,effect } = Vue
+
+  let state = reactive({
+    name: 'vue-next',
+    count: 0
+  })
+  
+  function handleClick() {
+    state.count = state.count + 1
+  }
+  effect(() => {
+    
+    render(
+    {
+      type: 'div',
+      props: null,
+      children: [
+        {
+          type: 'div',
+          props: null,
+          children: '被点击： ' + state.count
+        },
+        {
+          type: 'button',
+          props: {
+            onClick: handleClick
+          },
+          children: '点击'
+        }
+      ]
+    },
+    root
+  )
+  })
+
+
+
+</script>
