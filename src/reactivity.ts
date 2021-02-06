@@ -25,8 +25,7 @@ export function reactive(target) {
 
 
 export function track(target,key) {
-  console.log(123);
-  
+  console.log('track')
   let depsMap = targetMap.get(target)
   if(!depsMap){ 
     targetMap.set(target,(depsMap =new Map() ))
@@ -41,6 +40,7 @@ export function track(target,key) {
 }
 
 export function trigger(target,key) {
+    console.log('trigger');
     let depsMap = targetMap.get(target) 
     if(!depsMap) {
       return 

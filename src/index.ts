@@ -11,6 +11,7 @@ export function render(vnode, container) {
 }
 
 export function patch(n1, n2, container) {
+  console.log('patch');
   if (typeof n2.type === 'string') {
     processElment(n1, n2, container)
   }
