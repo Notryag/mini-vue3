@@ -8,6 +8,7 @@ export const nodeOps = {
   },
   remove: (child:Element) => {
     const parent = child.parentNode
+
     if(parent) {
       parent.removeChild(child)
     }

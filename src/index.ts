@@ -38,14 +38,14 @@ function patchElement(n1, n2, contianer) {
 
 function patchProps(el, n2, oldProps, newProps) {
   if (oldProps !== newProps) {
-    // 新的比旧的多
+    // 先对新的进行patch
     for (const key in newProps) {
       const prev = oldProps[key]
       const next = newProps[key]
 
       hostPatchProps(el, key, prev, next)
     }
-    // 旧的多 新的少
+    // 剩余的就是old
     for (const key in oldProps) {
       if (!(key in newProps)) {
         hostPatchProps(el, key, oldProps[key], null)
@@ -62,7 +62,7 @@ function patchChildren(n1, n2, container) {
     if (Array.isArray(c1)) {
       unmountChildren(c1)
     }
-    //  str > str
+    //  str > str 
     if (c1 !== c2) {
       nodeOps.setElementText(container, c2)
     }
@@ -82,9 +82,9 @@ function patchKeyedChildren(c1, c2, container) {
   mountChildren(c2, container)
 }
 
-function unmountChildren(children) {
-  for (let i = 0; i < children; i++) {
-    unmount(children[i])
+function unmountChildren(children) {  
+  for (let i = 0; i < children.length; i++) {
+    unmount(children[i].el)
   }
 }
 

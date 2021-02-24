@@ -2,10 +2,27 @@ let activeEffect
 type Dep = Set<any>
 type KeyToDep = Map<any, Dep>
 const targetMap = new WeakMap<any, KeyToDep>()
+let effectStack = []
+export function effect(fn,options= {}) {
+    const effect = createReactiveEffect(fn,options)
+    effect()
+    // effect 为包裹fn的函数, 执行后返回fn()/即fn的执行结果 
+    // 即是说 effect() === fn()
+    return effect
+}
 
-export function effect(fn) {
-  activeEffect = fn
-  fn()
+export function createReactiveEffect(fn,options) {
+  const effect = function reactiveEffect() {
+    try {
+      effectStack.push(effect)
+      activeEffect = effect
+      return fn()
+    } catch (e) {
+      effectStack.pop()
+      activeEffect = effectStack[effectStack.length - 1]
+    }
+  }
+  return effect
 }
 
 export function reactive(target) {
