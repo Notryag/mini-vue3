@@ -3,6 +3,29 @@ import { nodeOps, hostPatchProps } from './runtime-dom'
 export * from './reactivity'
 export * from './runtime-dom'
 
+export function createApp(rootComponent) {
+  const app = {
+    _container:null,
+    mount(rootContainer) {
+      render(rootComponent,rootContainer)
+      app._container = rootContainer
+    }
+  }
+  return app
+}
+
+export function createVnode(type,props =null,children=null) {
+  const vnode ={
+    el:null,
+    component:null,
+    key:(props || props.key) || null,
+    type,
+    props,
+    children
+  }
+  return  vnode
+}
+
 export function render(vnode, container) {
   console.log('render')
 
